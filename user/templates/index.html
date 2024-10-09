@@ -1,0 +1,228 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        {% load static %}
+        <!-- SweetAlert CSS -->
+
+        <meta charset="utf-8">
+        <title>Labkhand Food Service</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css'%}" rel="stylesheet">
+        <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css'%}" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+    </head>
+
+    <body>
+        
+        {% block content %}
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">  
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 py-3">  
+                <a href="#" class="navbar-brand p-0">  
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Labkhand</h1>  
+                </a>  
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">  
+                    <span class="fa fa-bars"></span>  
+                </button>  
+                <div class="collapse navbar-collapse" id="navbarCollapse">  
+                    <div class="navbar-nav ms-auto">  
+                        {% if user.is_authenticated %}
+                            <a class="nav-item nav-link"  href="{% url 'cart_view' %}">
+                                <i class="fa fa-shopping-cart" > سبد خرید</i>
+                            </a>
+                        {% else %}
+                        
+                            <a href="{% url 'login' %}" class="nav-item nav-link">ورود</a>  
+                            <a href="#" class="nav-item nav-link">|</a>  
+                            <a href="{% url 'signup' %}" class="nav-item nav-link">ثبت نام</a>  
+                        {% endif %}
+                    </div>  
+                </div>  
+            </nav>
+    
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+            </div>
+        </div>
+            <!-- Navbar & Hero End -->
+
+
+            <!-- Menu Start -->
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                        <h5 class="section-title ff-secondary text-center text-primary fw-normal">Food Menu</h5>
+                    </div>
+                    <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
+                        <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 {% if day == 'Sat' %} active {% endif %}"  href="{% url 'food_list' 'Sat' %}">
+                                    <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">شنبه</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 pb-3 {% if day == 'Sun' %}active{% endif %}"  href="{% url 'food_list' 'Sun' %}">
+                                    <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">یکشنبه</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 me-0 pb-3 {% if day == 'Mon' %}active{% endif %}"  href="{% url 'food_list' 'Mon' %}">
+                                   <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">دوشنبه</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 pb-3 {% if day == 'Tue' %}active{% endif %}"  href="{% url 'food_list' 'Tue' %}">
+                                    <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">سه شنبه</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 pb-3 {% if day == 'Wed' %}active{% endif %}"  href="{% url 'food_list' 'Wed' %}">
+                                    <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">چهارشنبه</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 pb-3 {% if day == 'Thu' %}active{% endif %}"  href="{% url 'food_list' 'Thu' %}">
+                                    <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">پنجشنبه</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="d-flex align-items-center text-start mx-3 pb-3 {% if day == 'Fri' %}active{% endif %}"  href="{% url 'food_list' 'Fri' %}">
+                                    <i class="fa fa-hamburger fa-2x text-primary"></i>
+                                    <div class="ps-3">
+                                        <small class="text-body">جمعه</small>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane fade show p-0 active">
+                                <div class="row g-4 justify-content-center">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                                    {% for food in foods %}
+                                            <div class="col-lg-10">  
+                                                <div class="d-flex align-items-center">  
+                                                    <img class="flex-shrink-0 img-fluid rounded" src="img/menu-1.jpg" alt="" style="width: 80px;">  
+                                                    <div class="w-100 d-flex flex-column text-start ps-4">  
+                                                        <h5 class="d-flex justify-content-between border-bottom pb-2 align-items-center">
+                                                            <div style="display: flex; align-items: center; gap: 90px;">
+                                                                <h3>{{ food.food_name }}</h3>
+                                                                <p>{{ food.price }} تومان</p>
+                                                                <input type="number" min="0" value="0" id="quantity-{{ food.slug }}" style="width: 150px; margin: 0 20px;"/>
+                                                                <button class="btn btn-primary" onclick="addToCart('{{ food.slug }}', '{{ day }}')">افزودن به سبد خرید</button>
+                                                            </div>
+                                                        </h5>    
+                                                    </div>  
+                                                </div>  
+                                            </div>  
+                                        {% endfor %}
+
+                                    </div> 
+                                
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Menu End -->
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        
+
+        <script>
+            function addToCart(slug) {
+                const quantityInput = document.getElementById(`quantity-${slug}`);
+                const quantity = quantityInput ? parseInt(quantityInput.value) : 0;
+            
+                if (quantity <= 0) {
+                    alert("لطفاً مقدار معتبری را وارد کنید!");
+                    return; 
+                }
+            
+                const day = document.getElementById('selected-day') ? document.getElementById('selected-day').value : '';
+            
+                fetch(`/add_to_cart/${slug}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCsrfToken()
+                    },
+                    body: JSON.stringify({ 'quantity': quantity, 'day': day })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('آیتم با موفقیت به سبد خرید اضافه شد!');
+                        document.getElementById('total_price').innerText = data.total_price + " تومان";
+                        document.getElementById('item_count').innerText = data.item_count + " آیتم";
+                    } else {
+                        alert(data.message || 'خطا در افزودن به سبد خرید!');
+                    }
+                })
+                .catch(error => {
+                    console.error('خطا در اتصال به سرور:', error);
+                });
+            }
+            
+            function getCsrfToken() {
+                return document.querySelector('[name=csrfmiddlewaretoken]').value;
+            }
+        </script>
+        
+        
+
+    </html>
+    {% endblock %}
