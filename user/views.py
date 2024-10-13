@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Food, Card, Reservation
 from django.contrib.auth.decorators import login_required
@@ -47,7 +47,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            login(request, user)
+            auth_login(request, user)
             if user.is_superuser:
                 return redirect('admin_panel')
             else:
