@@ -24,6 +24,10 @@ def success_view(request):
     return render(request, 'success.html')
 def success_finalize(request):
     return render(request, 'finalize.html')
+def login(request):
+    return render(request, 'login.html')
+def register(request):
+    return render(request, 'register.html')
 
 # register User
 def register_user(request):
