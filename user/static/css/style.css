@@ -304,12 +304,12 @@ body {
     font-size: 24px;  
     color: orange;  
     cursor: pointer;  
-    margin-left: 10px; /* فاصله مناسب از فیلد تعداد */  
+    margin-left: 10px;  
 }  
 
 .quantity::-webkit-outer-spin-button,  
 .quantity::-webkit-inner-spin-button {  
-    -webkit-appearance: none; /* حذف فلش‌های پیش‌فرض در Chrome و Safari */  
+    -webkit-appearance: none; 
     margin: 0;  
 }  
 
@@ -328,18 +328,18 @@ input[type='number']{
     justify-content: center;  
 }  
 .nav-item a {
-    text-decoration: none; /* حذف خط زیر لینک‌ها */
-    position: relative; /* برای استفاده از پوزیشن نسبی برای خط زیر */
+    text-decoration: none; 
+    position: relative;
 }
 
 .nav-item a.active::after {
-    content: ""; /* ایجاد محتوای خالی برای خط زیر */
-    position: absolute; /* موقعیت نسبی برای خط */
-    bottom: 0; /* پایین المان */
-    left: 0; /* چپ المان */
-    width: 100%; /* عرض کامل لینک */
-    height: 2px; /* ارتفاع خط */
-    background-color: orange; /* رنگ خط */
+    content: ""; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    height: 2px;
+    background-color: orange; 
 }
 
 @font-face {
@@ -355,9 +355,9 @@ input[type='number']{
 
 .div-item {
     display: block;
-    width: 100%; /* عرض کامل برای هر div */
+    width: 100%;
 }
 .nav-item.nav-link{
-    font-size: 20px !important;  /* تغییر اندازه فونت */
-    padding: 10px 20px ; /* تغییر اندازه فضای داخلی */
+    font-size: 20px !important;  
+    padding: 10px 20px ; 
 }
