@@ -53,9 +53,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>غذا</th>
-                    <th>قیمت هر واحد</th>
                     <th>تعداد</th>
-                    <th>قیمت کل</th>
                     <th>روز هفته</th>
                     <th>حذف</th>
                 </tr>
@@ -64,9 +62,7 @@
                 {% for item in cart_items %}
                     <tr>
                         <td>{{ item.food.food_name }}</td>
-                        <td>{{ item.food.price }} تومان</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ item.total_price }} تومان</td>
                         <td>{{ item.food.day_of_week }}</td>
                         <td>
                             <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">
@@ -82,9 +78,7 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success">نهایی کردن خرید</button>
             </form>
-            
-            <p class="text-right" style="margin: 0;"><strong>مجموع قیمت: {{ total_price }} تومان</strong></p>
-        </div>
+                    </div>
     </div>
     {% endblock %}
 </body>

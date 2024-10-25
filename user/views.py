@@ -54,7 +54,6 @@ def login_user(request):
                 return redirect('foods')
         else:
             return render(request, 'login.html', {'error': 'نام کاربری یا رمز عبور اشتباه است.'})
-    
     return render(request, 'login.html')
 
 # to show list of food in index
@@ -68,11 +67,8 @@ def food_list(request, day):
 def cart_view(request):
     cart_items = Card.objects.filter(user=request.user)
 
-    total_price = sum(item.total_price for item in cart_items)  # استفاده از متد total_price
-
     return render(request, 'cart.html', {
         'cart_items': cart_items,
-        'total_price': total_price,
     })
 
 @login_required
@@ -96,10 +92,9 @@ def add_to_cart_ajax(request, food_slug):
             cart_item.save()
 
             cart_items = Card.objects.filter(user=user)
-            total_price = sum(item.total_price for item in cart_items)  # از property استفاده کنید
             item_count = cart_items.count()
 
-            return JsonResponse({'status': 'success', 'total_price': total_price, 'item_count': item_count})
+            return JsonResponse({'status': 'success', 'item_count': item_count})
         except Food.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Food item not found!'})
         except json.JSONDecodeError:
@@ -139,13 +134,12 @@ def finalize_order(request):
     if request.method == "POST":
         cart_items = Card.objects.filter(user=request.user)
         for item in cart_items:
-            total_price = item.quantity * item.food.price
+            
             reservation = Reservation.objects.create(
                 user = request.user,
                 food = item.food,
                 quantity = item.quantity,
                 day_of_week = item.food.day_of_week, 
-                total_price = total_price, 
             )
         cart_items.delete()
         return redirect('success_finalize')
@@ -157,18 +151,11 @@ def add_food(request):
     if request.method == 'POST':
         for i in range(1, 8):
             food_name = request.POST.get(f'food{i}')
-            price = request.POST.get(f'price{i}')
             day_of_week = request.POST.get(f'day{i}')
 
-            if food_name and price and day_of_week:
-                try:
-                    price_value = Decimal(price)  # تبدیل به Decimal
-                except (ValueError, InvalidOperation):
-                    continue  # از ادامه کار جلوگیری می‌کند
-
+            if food_name and day_of_week:
                 Food.objects.create(
                     food_name=food_name,
-                    price=price_value,
                     day_of_week=day_of_week
                 )
 
@@ -187,10 +174,17 @@ def delete_all_foods(request):
         return redirect('add_food') 
     return HttpResponse(status=405)
 
-# report
 def admin_report(request):
     reservations = Reservation.objects.all()
+    
+    total_quantity = calculate_total_quantity(reservations)
+
     context = {
         'reservations': reservations,
+        'total_quantity': total_quantity,
     }
     return render(request, 'admin_report.html', context)
+
+
+def calculate_total_quantity(reservations):
+    return sum(reservation.quantity for reservation in reservations)

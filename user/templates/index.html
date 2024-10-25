@@ -126,7 +126,7 @@
                                                         <h5 class="d-flex justify-content-between border-bottom pb-2 align-items-center">
                                                             <div style="display: flex; align-items: center; gap: 90px;">
                                                                 <h3>{{ food.food_name }}</h3>
-                                                                <p>{{ food.price }} تومان</p>
+                                                                
                                                                 <input type="number" min="0" value="0" id="quantity-{{ food.slug }}" style="width: 150px; margin: 0 20px;"/>
                                                                 <button class="btn btn-primary" onclick="addToCart('{{ food.slug }}', '{{ day }}')">افزودن به سبد خرید</button>
                                                             </div>
@@ -172,7 +172,6 @@
                 .then(data => {
                     if (data.status === 'success') {
                         alert('آیتم با موفقیت به سبد خرید اضافه شد!');
-                        document.getElementById('total_price').innerText = data.total_price + " تومان";
                         document.getElementById('item_count').innerText = data.item_count + " آیتم";
                     } else {
                         alert(data.message || 'خطا در افزودن به سبد خرید!');

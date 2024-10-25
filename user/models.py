@@ -2,7 +2,6 @@ from django.db import models
 import datetime
 from django.conf import settings
 from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser, User
 
 # Food model
@@ -10,7 +9,6 @@ class Food(models.Model):
     slug = models.PositiveIntegerField(unique=True, blank=True, null=True)
     food_name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    price = models.DecimalField(max_digits=6, decimal_places=3)  # e.g., 000.000 
     CHOICE = [
         ('Sun', 'Sunday'),
         ('Mon', 'Monday'),
@@ -36,12 +34,6 @@ class Reservation(models.Model):
     order_date = models.DateTimeField(auto_now_add=True, null=True)
     day_of_week = models.CharField(max_length=20, default='شنبه') 
     is_completed = models.BooleanField(default=False) 
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    # to calculate total price while saving 
-    def save(self, *args, **kwargs):
-        if not self.total_price:
-            self.total_price = self.quantity * self.food.price
-        super(Reservation, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username} - {self.food.food_name} - {self.quantity} - {'Completed' if self.is_completed else 'Pending'}"
@@ -62,11 +54,6 @@ class Card(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     datetime = models.DateTimeField(auto_now_add=True)
     day = models.CharField(max_length=10, default='sat')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # اضافه کردن فیلد
-
-    def save(self, *args, **kwargs):
-        self.total_price = self.food.price * self.quantity  # محاسبه قیمت کل
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.food} - {self.user.username} ({self.day})"

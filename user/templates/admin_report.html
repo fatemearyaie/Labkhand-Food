@@ -90,7 +90,6 @@
                     <th>غذا</th>
                     <th>روز سفارش</th>
                     <th>تعداد</th>
-                    <th>قیمت کل</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,9 +113,12 @@
                         جمعه
                         {% endif %}</td>
                         <td>{{ reservation.quantity }}</td>
-                        <td>{{ reservation.total_price }}</td>
                     </tr>
                 {% endfor %}
+                <tr>
+                    <td colspan="3"><strong> تعداد کل سفارشات</strong></td>
+                    <td><strong>{{ total_quantity }}</strong></td>
+                </tr>
             </tbody>
         </table>
     </div>
