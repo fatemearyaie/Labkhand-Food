@@ -56,6 +56,7 @@
                     <th>تعداد</th>
                     <th>روز هفته</th>
                     <th>تاریخ</th>
+                    <th>قیمت</th>
                     <th>حذف</th>
                 </tr>
             </thead>
@@ -65,7 +66,8 @@
                         <td>{{ item.food.food_name }}</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.food.day_of_week }}</td>
-                        <td> {{ item.jdate }}
+                        <td> {{ item.jdate }}</td>
+                        <td></td>
                         <td>
                             <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>

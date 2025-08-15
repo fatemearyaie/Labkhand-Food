@@ -23,6 +23,7 @@ class Food(models.Model):
     ]
     day_of_week = models.CharField(max_length=3, choices=CHOICE, default='Sat') 
     datetime = models.DateTimeField(default=timezone.now)
+    price = models.DecimalField(max_digits=6, decimal_places=3, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:  # فقط در صورتی که slug وجود ندارد، مقداردهی شود

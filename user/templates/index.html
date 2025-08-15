@@ -125,9 +125,10 @@
                                                         <h5 class="d-flex justify-content-between border-bottom pb-2 align-items-center">
                                                             <div style="display: flex; align-items: center; gap: 90px;">
                                                                 <h3>{{ food.food_name }}</h3>
-                                                                <h3>{{ food.jdate }} </h3>
+                                                                <h4>{{ food.jdate }} </h4>
+                                                                <h4> {{ food.price }}</h4>
                                                                 <input type="number" min="0" value="0" id="quantity-{{ food.slug }}" style="width: 150px; margin: 0 20px;"/>
-                                                                <button class="btn btn-primary" onclick="addToCart('{{ food.slug }}', '{{ day }}')">افزودن به سبد خرید</button>
+                                                                <button class="btn btn-primary" onclick="addToCart('{{ food.slug }}', '{{ day }}')">افزودن</button>
                                                             </div>
                                                         </h5>    
                                                     </div>  
