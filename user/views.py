@@ -55,7 +55,8 @@ def food_list(request, day):
 @login_required
 def cart_view(request):
     cart_items = Card.objects.filter(user=request.user)
-
+    for item in cart_items:
+        item.total_price = item.food.price * item.quantity
     return render(request, 'cart.html', {
         'cart_items': cart_items,
     })

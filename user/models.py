@@ -13,13 +13,13 @@ class Food(models.Model):
     food_name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     CHOICE = [
-        ('Sun', 'Sunday'),
-        ('Mon', 'Monday'),
-        ('Tue', 'Tuesday'),
-        ('Wed', 'Wednesday'),
-        ('Thu', 'Thursday'),
-        ('Fri', 'Friday'),
-        ('Sat', 'Saturday'),
+        ('Sun', 'یکشنبه'),
+        ('Mon', 'دوشنبه'),
+        ('Tue', 'سه شنبه'),
+        ('Wed', 'چهارشنبه'),
+        ('Thu', 'پنجشنبه'),
+        ('Fri', 'جمعه'),
+        ('Sat', 'شنبه'),
     ]
     day_of_week = models.CharField(max_length=3, choices=CHOICE, default='Sat') 
     datetime = models.DateTimeField(default=timezone.now)
