@@ -26,17 +26,6 @@ def success_finalize(request):
     return render(request, 'finalize.html')
 def login(request):
     return render(request, 'login.html')
-def register(request):
-    return render(request, 'register.html')
-
-# register User
-def register_user(request):
-    form = UserCreationForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect("login")
-    context = {"form": form}
-    return render(request, "register.html", context)
 
 # login user
 def login_user(request):
@@ -176,7 +165,6 @@ def delete_all_foods(request):
 
 def admin_report(request):
     reservations = Reservation.objects.all()
-    
     total_quantity = calculate_total_quantity(reservations)
 
     context = {

@@ -37,7 +37,6 @@
                     {% else %}
                         <a href="{% url 'login' %}" class="nav-item nav-link">ورود</a>  
                         <a href="#" class="nav-item nav-link">|</a>  
-                        <a href="{% url 'register' %}" class="nav-item nav-link">ثبت نام</a>  
                     {% endif %}
                 </div>  
             </div>  
@@ -126,7 +125,7 @@
                                                         <h5 class="d-flex justify-content-between border-bottom pb-2 align-items-center">
                                                             <div style="display: flex; align-items: center; gap: 90px;">
                                                                 <h3>{{ food.food_name }}</h3>
-                                                                
+                                                                <h3>{{ food.jdate }} </h3>
                                                                 <input type="number" min="0" value="0" id="quantity-{{ food.slug }}" style="width: 150px; margin: 0 20px;"/>
                                                                 <button class="btn btn-primary" onclick="addToCart('{{ food.slug }}', '{{ day }}')">افزودن به سبد خرید</button>
                                                             </div>

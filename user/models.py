@@ -3,6 +3,9 @@ import datetime
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser, User
+from extensions.utils import jalaliConvertor
+from django.utils import timezone
+
 
 # Food model
 class Food(models.Model):
@@ -19,12 +22,17 @@ class Food(models.Model):
         ('Sat', 'Saturday'),
     ]
     day_of_week = models.CharField(max_length=3, choices=CHOICE, default='Sat') 
+    datetime = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         if not self.slug:  # فقط در صورتی که slug وجود ندارد، مقداردهی شود
             last_slug = Food.objects.order_by('slug').last()
             self.slug = (last_slug.slug + 1) if last_slug else 1  # ایجاد slug خودکار
         super().save(*args, **kwargs)
+    @property
+    def jdate(self):
+        return jalaliConvertor(self.datetime)
+
 
 # Reservation model to connect Food and other models
 class Reservation(models.Model):
@@ -37,6 +45,8 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.food.food_name} - {self.quantity} - {'Completed' if self.is_completed else 'Pending'}"
+    def jdate(self): # this is a method to use jalali date in app
+        return jalaliConvertor(self.order_date)
 
 def save(self, *args, **kwargs):
         if self.order_date.strftime('%a') != self.food.day_of_week:  
@@ -57,3 +67,5 @@ class Card(models.Model):
 
     def __str__(self):
         return f"{self.food} - {self.user.username} ({self.day})"
+    def jdate(self): # this is a method to use jalali date in app
+        return jalaliConvertor(self.datetime)
