@@ -32,7 +32,9 @@ class Food(models.Model):
     @property
     def jdate(self):
         return jalaliConvertor(self.datetime)
-
+    class Meta:
+        verbose_name = 'غذا'
+        verbose_name_plural = 'غذاها'
 
 # Reservation model to connect Food and other models
 class Reservation(models.Model):
@@ -47,6 +49,9 @@ class Reservation(models.Model):
         return f"{self.user.username} - {self.food.food_name} - {self.quantity} - {'Completed' if self.is_completed else 'Pending'}"
     def jdate(self): # this is a method to use jalali date in app
         return jalaliConvertor(self.order_date)
+    class Meta:
+        verbose_name = "رزرو"
+        verbose_name_plural = 'رزروها'
 
 def save(self, *args, **kwargs):
         if self.order_date.strftime('%a') != self.food.day_of_week:  
@@ -69,3 +74,6 @@ class Card(models.Model):
         return f"{self.food} - {self.user.username} ({self.day})"
     def jdate(self): # this is a method to use jalali date in app
         return jalaliConvertor(self.datetime)
+    class Meta:
+        verbose_name = 'کارت'
+        verbose_name_plural = 'کارت ها'
