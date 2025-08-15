@@ -123,7 +123,9 @@
                         <option value="Thu">پنجشنبه</option>
                         <option value="Fri">جمعه</option>
                     </select>
-                </div>
+                     <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date1" name="date1" data-toggle="datetimepicker" data-target="#date1" placeholder="تاریخ را انتخاب کنید" required>
+</div>
             
                 <div class="form-row">
                     <label for="food2">غذا:</label>
@@ -139,6 +141,8 @@
                         <option value="Thu">پنجشنبه</option>
                         <option value="Fri">جمعه</option>
                     </select>
+                    <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date2" name="date2" data-toggle="datetimepicker" data-target="#date2" placeholder="تاریخ را انتخاب کنید" required>
                 </div>
             
                 <!-- تکرار برای هر غذا -->
@@ -156,6 +160,8 @@
                         <option value="Thu">پنجشنبه</option>
                         <option value="Fri">جمعه</option>
                     </select>
+                    <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date3" name="date3" data-toggle="datetimepicker" data-target="#date3" placeholder="تاریخ را انتخاب کنید" required>
                 </div>
             
                 <div class="form-row">
@@ -172,6 +178,8 @@
                         <option value="Thu">پنجشنبه</option>
                         <option value="Fri">جمعه</option>
                     </select>
+                    <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date4" name="date4" data-toggle="datetimepicker" data-target="#date4" placeholder="تاریخ را انتخاب کنید" required>
                 </div>
             
                 <div class="form-row">
@@ -188,6 +196,8 @@
                         <option value="Thu">پنجشنبه</option>
                         <option value="Fri">جمعه</option>
                     </select>
+                    <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date5" name="date5" data-toggle="datetimepicker" data-target="#date5" placeholder="تاریخ را انتخاب کنید" required>
                 </div>
             
                 <div class="form-row">
@@ -204,6 +214,8 @@
                         <option value="Thu"selected>پنجشنبه</option>
                         <option value="Fri">جمعه</option>
                     </select>
+                    <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date6" name="date6" data-toggle="datetimepicker" data-target="#date6" placeholder="تاریخ را انتخاب کنید" required>
                 </div>
             
                 <div class="form-row">
@@ -220,6 +232,8 @@
                         <option value="Thu">پنجشنبه</option>
                         <option value="Fri"selected>جمعه</option>
                     </select>
+                    <label for="date1">تاریخ دقیق:</label>
+    <input type="text" class="form-control datetimepicker-input" id="date7" name="date7" data-toggle="datetimepicker" data-target="#date7" placeholder="تاریخ را انتخاب کنید" required>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button type="submit" class="add-food-button">ثبت</button>
@@ -241,6 +255,22 @@
                         return confirm("آیا مطمئن هستید که می‌خواهید تمام غذاها را حذف کنید؟");
                     }
                 </script>
+                <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script>
+    $(function () {
+        $('#date1').datetimepicker({
+            format: 'YYYY-MM-DD'  // فرمت تاریخ: سال-ماه-روز
+        });
+        $('#date2').datetimepicker({ format: 'YYYY-MM-DD' });
+        $('#date3').datetimepicker({ format: 'YYYY-MM-DD' });
+        $('#date4').datetimepicker({ format: 'YYYY-MM-DD' });
+        $('#date5').datetimepicker({ format: 'YYYY-MM-DD' });
+        $('#date6').datetimepicker({ format: 'YYYY-MM-DD' });
+        $('#date7').datetimepicker({ format: 'YYYY-MM-DD' });
+    });
+</script>
+
         </div>
     </div>
     {% endblock %}
