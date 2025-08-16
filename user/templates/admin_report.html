@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,41 +86,33 @@
 
         <table>
             <thead>
-                <tr>
-                    <th>نام کاربر</th>
-                    <th>غذا</th>
-                    <th>روز سفارش</th>
-                    <th>تعداد</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for reservation in reservations %}
-                    <tr>
-                        <td>{{ reservation.user.username }}</td>
-                        <td>{{ reservation.food.food_name }}</td>
-                        <td> {% if reservation.day_of_week == 'Sat' %}
-                            شنبه
-                        {% elif reservation.day_of_week == 'Sun' %}
-                        یکشنبه
-                        {% elif reservation.day_of_week == 'Mon' %}
-                        دوشنبه
-                        {% elif reservation.day_of_week == 'Tue' %}
-                        سه شنبه
-                        {% elif reservation.day_of_week == 'Wed' %}
-                        چهارشنبه
-                        {% elif reservation.day_of_week == 'Thu' %}
-                        پنجشنبه
-                        {% elif reservation.day_of_week == 'Fri' %}
-                        جمعه
-                        {% endif %}</td>
-                        <td>{{ reservation.quantity }}</td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="3"><strong> تعداد کل سفارشات</strong></td>
-                    <td><strong>{{ total_quantity }}</strong></td>
-                </tr>
-            </tbody>
+    <tr>
+        <th>نام کاربر</th>
+        <th>غذا</th>
+        <th>روز سفارش</th>
+        <th>تعداد</th>
+        <th>قیمت واحد</th>
+        <th>قیمت کل</th>
+    </tr>
+</thead>
+<tbody>
+    {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.user.username }}</td>
+            <td>{{ reservation.food.food_name }}</td>
+            <td>{{ reservation.jdate }}</td>
+            <td>{{ reservation.total_quantity }}</td>
+            <td>{{ reservation.unit_price }}</td>
+            <td>{{ reservation.total_price }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3"><strong><b> تعداد کل سفارشات :</b></strong></td>
+        <td><strong>{{ total_quantity }}</strong></td>
+        <td><strong><b>قیمت کل کاربران : </b></strong></td>
+        <td>{{ total_price_all }}</td>
+    </tr>
+</tbody>
         </table>
     </div>
 </body>
