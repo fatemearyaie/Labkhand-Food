@@ -165,14 +165,10 @@ def delete_all_foods(request):
     return HttpResponse(status=405)
 
 def admin_report(request):
-    reservations = Reservation.objects.select_related('user', 'food').annotate(
-        total_quantity=Sum('quantity'),
-        total_price=Sum(F('quantity') * F('food__price')),
-        unit_price=F('food__price')
-    ).order_by('user__username', 'food__food_name')
+    reservations = Reservation.objects.select_related('user', 'food').order_by('user__username', 'food__food_name')
 
-    total_quantity = reservations.aggregate(Sum('total_quantity'))['total_quantity__sum']
-    total_price_all = reservations.aggregate(Sum('total_price'))['total_price__sum']
+    total_quantity = reservations.aggregate(total_qty=Sum('quantity'))['total_qty']
+    total_price_all = reservations.aggregate(total_price=Sum(F('quantity') * F('food__price')))['total_price']
 
     context = {
         'reservations': reservations,

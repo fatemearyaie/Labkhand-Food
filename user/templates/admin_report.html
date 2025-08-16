@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,11 +100,11 @@
     {% for reservation in reservations %}
         <tr>
             <td>{{ reservation.user.username }}</td>
-            <td>{{ reservation.food.food_name }}</td>
-            <td>{{ reservation.jdate }}</td>
-            <td>{{ reservation.total_quantity }}</td>
-            <td>{{ reservation.unit_price }}</td>
-            <td>{{ reservation.total_price }}</td>
+    <td>{{ reservation.food.food_name }}</td>
+    <td>{{ reservation.jdate }}</td>
+    <td>{{ reservation.quantity }}</td>
+    <td>{{ reservation.food.price }}</td>
+    <td>{{ reservation.quantity|mul:reservation.food.price }}</td>
         </tr>
     {% endfor %}
     <tr>

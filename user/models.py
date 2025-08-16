@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser, User
 from extensions.utils import jalaliConvertor
 from django.utils import timezone
+from extensions.utils import jalaliConvertor
 
 
 # Food model
@@ -57,7 +58,10 @@ class Reservation(models.Model):
         return f"{self.user.username} - {self.food.food_name} - {self.quantity} - {'Completed' if self.is_completed else 'Pending'}"
     @property
     def jdate(self):
-        return jalaliConvertor(self.order_date)
+        if self.order_date:  # اگر تاریخ موجود است
+            return jalaliConvertor(self.order_date)
+        return "تاریخ موجود نیست"
+
     def save(self, *args, **kwargs):
         if self.order_date and self.order_date.strftime('%a') != self.food.day_of_week:
             raise ValueError("Order date does not match the food's day of the week")
