@@ -30,15 +30,16 @@
             </button>  
             <div class="collapse navbar-collapse" id="navbarCollapse">  
                 <div class="navbar-nav ms-auto">  
-                    {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{% url 'cart_view' %}">
-                            <i class="fa fa-shopping-cart"> سبد خرید</i>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="nav-item nav-link">ورود</a>  
-                        <a href="#" class="nav-item nav-link">|</a>  
-                    {% endif %}
-                </div>  
+    {% if user.is_authenticated %}
+        <span class="nav-item nav-link">{{ user.username }}</span>
+        <a class="nav-item nav-link" href="{% url 'cart_view' %}">
+            <i class="fa fa-shopping-cart"></i> سبد خرید 
+        </a>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">خروج</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="nav-item nav-link">ورود</a>  
+    {% endif %}
+</div> 
             </div>  
         </nav>
     
