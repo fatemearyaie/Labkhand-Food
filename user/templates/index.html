@@ -31,11 +31,11 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">  
                 <div class="navbar-nav ms-auto">  
     {% if user.is_authenticated %}
-        <span class="nav-item nav-link">{{ user.username }}</span>
+        <span class="nav-item nav-link"><i class="fa fa-user me-2">  {{ user.username }}</i></span>
         <a class="nav-item nav-link" href="{% url 'cart_view' %}">
             <i class="fa fa-shopping-cart"></i> سبد خرید 
         </a>
-        <a class="nav-item nav-link" href="{% url 'logout' %}">خروج</a>
+        <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt me-2">خروج</i></a>
     {% else %}
         <a href="{% url 'login' %}" class="nav-item nav-link">ورود</a>  
     {% endif %}
