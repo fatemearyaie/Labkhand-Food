@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Food, Card, Reservation
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ import json
 from django.urls import reverse
 from django.contrib import messages
 from decimal import Decimal, InvalidOperation
-
+from django.db.models import Sum, F
 
 # render pages
 @login_required
@@ -165,15 +165,24 @@ def delete_all_foods(request):
     return HttpResponse(status=405)
 
 def admin_report(request):
-    reservations = Reservation.objects.all()
-    total_quantity = calculate_total_quantity(reservations)
+    reservations = Reservation.objects.select_related('user', 'food').annotate(
+        total_quantity=Sum('quantity'),
+        total_price=Sum(F('quantity') * F('food__price')),
+        unit_price=F('food__price')
+    ).order_by('user__username', 'food__food_name')
+
+    total_quantity = reservations.aggregate(Sum('total_quantity'))['total_quantity__sum']
+    total_price_all = reservations.aggregate(Sum('total_price'))['total_price__sum']
 
     context = {
         'reservations': reservations,
         'total_quantity': total_quantity,
+        'total_price_all': total_price_all,
     }
     return render(request, 'admin_report.html', context)
 
-
 def calculate_total_quantity(reservations):
     return sum(reservation.quantity for reservation in reservations)
+def user_logout(request):
+    logout(request)
+    return redirect('login')  # بعد از خروج میره به صفحه‌ی login
