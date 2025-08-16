@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'jalali_date',
+    'django.contrib.humanize',
 
 ]
 

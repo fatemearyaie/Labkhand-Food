@@ -22,8 +22,8 @@ class Food(models.Model):
         ('Sat', 'شنبه'),
     ]
     day_of_week = models.CharField(max_length=3, choices=CHOICE, default='Sat') 
-    datetime = models.DateTimeField(default=timezone.now)
-    price = models.DecimalField(max_digits=6, decimal_places=3, null=True, blank=True)
+    datetime = models.DateField(default=timezone.now)
+    price = models.DecimalField(max_digits=6, decimal_places=0, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:  # فقط در صورتی که slug وجود ندارد، مقداردهی شود
@@ -37,31 +37,35 @@ class Food(models.Model):
         verbose_name = 'غذا'
         verbose_name_plural = 'غذاها'
 
-# Reservation model to connect Food and other models
 class Reservation(models.Model):
+    CHOICE = [
+        ('Sun', 'یکشنبه'),
+        ('Mon', 'دوشنبه'),
+        ('Tue', 'سه شنبه'),
+        ('Wed', 'چهارشنبه'),
+        ('Thu', 'پنجشنبه'),
+        ('Fri', 'جمعه'),
+        ('Sat', 'شنبه'),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    order_date = models.DateTimeField(auto_now_add=True, null=True)
-    day_of_week = models.CharField(max_length=20, default='شنبه') 
+    order_date = models.DateField(null=True, blank=True)
+    day_of_week = models.CharField(max_length=20, default='sat', choices=CHOICE) 
     is_completed = models.BooleanField(default=False) 
-
     def __str__(self):
         return f"{self.user.username} - {self.food.food_name} - {self.quantity} - {'Completed' if self.is_completed else 'Pending'}"
-    def jdate(self): # this is a method to use jalali date in app
+    @property
+    def jdate(self):
         return jalaliConvertor(self.order_date)
-    class Meta:
-        verbose_name = "رزرو"
-        verbose_name_plural = 'رزروها'
-
-def save(self, *args, **kwargs):
-        if self.order_date.strftime('%a') != self.food.day_of_week:  
+    def save(self, *args, **kwargs):
+        if self.order_date and self.order_date.strftime('%a') != self.food.day_of_week:
             raise ValueError("Order date does not match the food's day of the week")
         super().save(*args, **kwargs)
 
-def __str__(self):
-    return f"Reservation of {self.food_name.food_name} on {self.order_date.strftime('%Y-%m-%d')}"
-
+    class Meta:
+        verbose_name = "رزرو"
+        verbose_name_plural = 'رزروها'
 
 
 class Card(models.Model):

@@ -15,4 +15,5 @@ urlpatterns = [
     path('delete_all_foods/', views.delete_all_foods, name='delete_all_foods'),
     path('finalize/', views.success_finalize, name='success_finalize'),
     path('adminreport/', views.admin_report, name='admin_report'),
+    path('logout/', views.user_logout, name='logout'),
 ]
