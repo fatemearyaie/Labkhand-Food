@@ -3,35 +3,6 @@
 {% block main %}
 <body>
     {% block content %}
-    <!-- Navbar & Hero Start -->
-    <div class="container-xxl position-relative p-0">  
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 py-3">  
-            <a href="#" class="navbar-brand p-0">  
-                <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Labkhand</h1>  
-            </a>  
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">  
-                <span class="fa fa-bars"></span>  
-            </button>  
-            <div class="collapse navbar-collapse" id="navbarCollapse">  
-                <div class="navbar-nav ms-auto">  
-    {% if user.is_authenticated %}
-        <span class="nav-item nav-link"><i class="fa fa-user me-2">  {{ user.username }}</i></span>
-        <a class="nav-item nav-link" href="{% url 'cart_view' %}">
-            <i class="fa fa-shopping-cart"></i> سبد خرید 
-        </a>
-        <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt me-2">خروج</i></a>
-    {% else %}
-        <a href="{% url 'login' %}" class="nav-item nav-link">ورود</a>  
-    {% endif %}
-</div> 
-            </div>  
-        </nav>
-    
-            <div class="container-xxl py-5 bg-dark hero-header mb-5">
-            </div>
-        </div>
-            <!-- Navbar & Hero End -->
-
 
             <!-- Menu Start -->
             <div class="container-xxl py-5">
