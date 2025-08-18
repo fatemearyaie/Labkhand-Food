@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.contrib import messages
 from decimal import Decimal, InvalidOperation
 from django.db.models import Sum, F
+from .forms import CustomUserCreationForm
 
 # render pages
 @login_required
@@ -182,3 +183,15 @@ def calculate_total_quantity(reservations):
 def user_logout(request):
     logout(request)
     return redirect('login')  # بعد از خروج میره به صفحه‌ی login
+
+
+def add_user_view(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect("add_user")  # برگرده به صفحه اصلی رزرو غذا یا هرجا خواستی
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, "add_user.html", {"form": form})
