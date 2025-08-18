@@ -1,9 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block title %}
 {% block title-meta %}
 پروفایل کاربری
 {% endblock %} {% endblock %}
-
+{% block main %}
 <div class="col-md-12">
             <!-- general form elements -->
             <div class="card card-primary">
@@ -28,3 +30,4 @@
     <button class="btn btn-success mt-3"> ویرایش اطلاعات</button>
     </form>
 </div>
+{% endblock %}
