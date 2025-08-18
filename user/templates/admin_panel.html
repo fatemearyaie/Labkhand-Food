@@ -86,6 +86,10 @@
         .report-button {
             background-color:#007bff ; /* Green for report */
         }
+        .user-button {
+    background-color: orange; /* رنگ متفاوت برای تمایز */
+}
+
     </style>
 </head>
 <body>
@@ -245,7 +249,10 @@
                 {% csrf_token %}
             <button type="submit" class="delete-button" onclick="return confirmDeletion()">حذف</button>
             </form>
-                    
+        <form action="{% url 'add_user' %}">
+            <button type="submit" class="user-button">افزودن کاربر جدید</button>
+        </form>
+
                     
                     
                 </div>
