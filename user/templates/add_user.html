@@ -11,6 +11,17 @@
 <div class="col-md-12">
     <div class="card card-primary shadow-sm">
         <div class="card-body">
+            {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
@@ -22,7 +33,7 @@
                         {{ form.password2|as_crispy_field }}
                     </div>
                 </div>
-                <button class="btn btn-success mt-3">ویرایش اطلاعات</button>
+                <button class="btn btn-success mt-3"> افزودن کاربر</button>
             </form>
         </div>
     </div>

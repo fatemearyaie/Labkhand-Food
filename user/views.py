@@ -184,14 +184,13 @@ def user_logout(request):
     logout(request)
     return redirect('login')  # بعد از خروج میره به صفحه‌ی login
 
-
-def add_user_view(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+def add_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            return redirect("add_user")  # برگرده به صفحه اصلی رزرو غذا یا هرجا خواستی
+            form.save()
+            messages.success(request, 'کاربر با موفقیت اضافه شد!')
+            return redirect('add_user')  # یا نام URL صفحه افزودن کاربر
     else:
-        form = CustomUserCreationForm()
-
-    return render(request, "add_user.html", {"form": form})
+        form = UserCreationForm()
+    return render(request, 'add_user.html', {'form': form})
