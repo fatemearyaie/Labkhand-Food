@@ -1,11 +1,8 @@
+{% extends 'base.html' %}
 {% load humanize %}
 {% load custom_filters %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>گزارش سفارشات</title>
+{% load static %}
+{% block main %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -79,7 +76,6 @@
             window.print();
         }
     </script>
-</head>
 <body>
     <div class="container">
         <h2>گزارش سفارشات</h2>
@@ -118,3 +114,4 @@
     </div>
 </body>
 </html>
+{% endblock %}

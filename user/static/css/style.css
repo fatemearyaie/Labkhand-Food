@@ -1,5 +1,7 @@
 body {
     font-family: 'Heebo', sans-serif;
+    direction: rtl;
+    text-align: right;
 }
 :root {
     --primary: #FEA116;
