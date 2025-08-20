@@ -185,28 +185,39 @@ def user_logout(request):
     return redirect('login')  # بعد از خروج میره به صفحه‌ی login
 
 
-
 def add_user(request):
-    # فرم افزودن گروه
-    if request.method == 'POST' and 'add_group' in request.POST:
-        group_form = GroupForm(request.POST)
-        if group_form.is_valid():
-            group_form.save()
-            return redirect('add_user')  # بعد از اضافه کردن گروه، صفحه رفرش شود
-    else:
-        group_form = GroupForm()
+    group_form = GroupForm()
+    form = CustomUserCreationForm()
 
-    # فرم افزودن کاربر
-    if request.method == 'POST' and 'add_user' in request.POST:
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            form.save_m2m()
-            return redirect('add_user')
-    else:
-        form = CustomUserCreationForm()
+    # اضافه کردن گروه
+    if request.method == 'POST':
+        # فرم گروه جدید
+        if 'add_group' in request.POST:
+            group_form = GroupForm(request.POST)
+            if group_form.is_valid():
+                group_form.save()
+                return redirect('add_user')
+        
+        # حذف گروه
+        elif 'delete_group' in request.POST:
+            group_id = request.POST.get('delete_group_id')
+            if group_id:
+                group = get_object_or_404(Group, id=group_id)
+                group.delete()
+                return redirect('add_user')
 
+        # فرم اضافه کردن کاربر
+        elif 'add_user' in request.POST:
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form.save_m2m()
+                return redirect('add_user')
+
+    # رندر فرم‌ها
+    groups = Group.objects.all()
     return render(request, 'add_user.html', {
         'form': form,
-        'group_form': group_form
+        'group_form': group_form,
+        'groups': groups
     })
