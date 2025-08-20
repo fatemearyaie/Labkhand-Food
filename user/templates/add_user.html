@@ -1,30 +1,25 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %} پروفایل کاربری {% endblock %}
+{% block title %}افزودن کاربر{% endblock %}
 
 {% block main %}
-<header class="text-center my-4">        <h1>افزودن کاربر جدید</h1>
-    </header>
+<div class="container mt-4">
 
-<div class="col-md-12">
-    <div class="card card-primary shadow-sm">
-        <div class="card-body">
-            {% if messages %}
-    <div class="container mt-3">
+    <h1 class="text-center mb-4">افزودن کاربر جدید</h1>
+
+    <!-- نمایش پیام‌ها -->
+    {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
-    </div>
-{% endif %}
+    {% endif %}
 
-            <form method="POST" enctype="multipart/form-data">
+    <!-- فرم افزودن کاربر -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST">
                 {% csrf_token %}
-                
                 <div class="row">
                     <div class="col-md-6">
                         {{ form.username|as_crispy_field }}
@@ -33,21 +28,20 @@
                         {{ form.password1|as_crispy_field }}
                     </div>
                 </div>
-
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <h5>گروه‌ها:</h5>
                         {{ form.groups|as_crispy_field }}
                     </div>
                     <div class="col-md-6">
                         {{ form.password2|as_crispy_field }}
                     </div>
                 </div>
-
-                <button class="btn btn-success mt-3 w-100">افزودن کاربر</button>
-
+                <button type="submit" name="add_user" class="btn btn-success mt-3 w-100">افزودن کاربر</button>
             </form>
         </div>
     </div>
+
+    
+
 </div>
 {% endblock %}

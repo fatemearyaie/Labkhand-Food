@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, GroupForm
 from .models import Food, Card, Reservation
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
@@ -9,7 +9,6 @@ import json
 from django import forms
 from django.urls import reverse
 from django.contrib import messages
-from decimal import Decimal, InvalidOperation
 from django.db.models import Sum, F
 from django.contrib.auth.models import User, Group
 
@@ -185,8 +184,20 @@ def user_logout(request):
     logout(request)
     return redirect('login')  # بعد از خروج میره به صفحه‌ی login
 
+
+
 def add_user(request):
-    if request.method == 'POST':
+    # فرم افزودن گروه
+    if request.method == 'POST' and 'add_group' in request.POST:
+        group_form = GroupForm(request.POST)
+        if group_form.is_valid():
+            group_form.save()
+            return redirect('add_user')  # بعد از اضافه کردن گروه، صفحه رفرش شود
+    else:
+        group_form = GroupForm()
+
+    # فرم افزودن کاربر
+    if request.method == 'POST' and 'add_user' in request.POST:
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -194,4 +205,8 @@ def add_user(request):
             return redirect('add_user')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'add_user.html', {'form': form})
+
+    return render(request, 'add_user.html', {
+        'form': form,
+        'group_form': group_form
+    })

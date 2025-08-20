@@ -16,5 +16,5 @@ urlpatterns = [
     path('finalize/', views.success_finalize, name='success_finalize'),
     path('adminreport/', views.admin_report, name='admin_report'),
     path('logout/', views.user_logout, name='logout'),
-    path('add_user/', views.add_user, name='add_user')
+    path('add_user/', views.add_user, name='add_user'),
 ]
