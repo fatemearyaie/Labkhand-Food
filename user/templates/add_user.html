@@ -5,9 +5,7 @@
 
 {% block main %}
 <div class="container mt-4">
-
     <h1 class="text-center mb-4">افزودن کاربر جدید</h1>
-
     <!-- نمایش پیام‌ها -->
     {% if messages %}
         {% for message in messages %}
@@ -40,8 +38,36 @@
             </form>
         </div>
     </div>
+<!-- فرم افزودن گروه جدید -->
+<div class="card mt-3">
+    <div class="card-body">
+        <h2 class="text-center mb-4">افزودن گروه</h2>
 
-    
+        <!-- اضافه کردن گروه -->
+        <form method="POST" class="mb-3">
+            {% csrf_token %}
+            {{ group_form.name|as_crispy_field }}
+            <button type="submit" name="add_group" class="btn btn-primary mt-3 w-100">ذخیره گروه</button>
+        </form>
+
+        <!-- حذف گروه -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-2">
+                <h2 class="text-center mb-4"> حذف گروه </h2>
+                <select name="delete_group_id" class="form-select">
+                    {% for group in groups %}
+                        <option value="{{ group.id }}">{{ group.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" name="delete_group" class="btn btn-danger mt-3 w-100">حذف گروه</button>
+        </form>
+    </div>
+</div>
+
+        </div>
+    </div>
 
 </div>
 {% endblock %}
