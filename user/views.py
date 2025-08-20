@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 from .models import Food, Card, Reservation
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django import forms
 from django.urls import reverse
 from django.contrib import messages
 from decimal import Decimal, InvalidOperation
 from django.db.models import Sum, F
-from .forms import CustomUserCreationForm
+from django.contrib.auth.models import User, Group
 
 # render pages
 @login_required
@@ -186,11 +187,11 @@ def user_logout(request):
 
 def add_user(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'کاربر با موفقیت اضافه شد!')
-            return redirect('add_user')  # یا نام URL صفحه افزودن کاربر
+            user = form.save()
+            form.save_m2m()
+            return redirect('add_user')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'add_user.html', {'form': form})
