@@ -363,3 +363,11 @@ input[type='number']{
     font-size: 20px !important;  
     padding: 10px 20px ; 
 }
+.group-select {
+    width: 100%;          /* تمام عرض ستون */
+    height: 150px;        /* ارتفاع بیشتر شبیه باکس */
+    border: 1px solid #aaa;
+    border-radius: 6px;   /* گوشه‌ها کمی گرد */
+    padding: 8px;
+    background-color: #fff;
+}
