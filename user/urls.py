@@ -17,4 +17,5 @@ urlpatterns = [
     path('adminreport/', views.admin_report, name='admin_report'),
     path('logout/', views.user_logout, name='logout'),
     path('add_user/', views.add_user, name='add_user'),
+    path('group-food-prices/', views.manage_group_food_prices, name='manage_group_food_prices'),
 ]
