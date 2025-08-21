@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .forms import CustomUserCreationForm, GroupForm
-from .models import Food, Card, Reservation
+from .forms import CustomUserCreationForm, GroupForm, GroupFoodPriceForm
+from .models import Food, Card, Reservation, GroupFoodPrice
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -47,10 +47,30 @@ def login_user(request):
     return render(request, 'login.html')
 
 # to show list of food in index
-def food_list(request, day):  
-    foods = Food.objects.filter(day_of_week=day)
-    return render(request, 'index.html', {'foods': foods, 'day': day})
 
+def food_list(request, day):
+    foods = Food.objects.filter(day_of_week=day)
+
+    # گروه کاربر
+    user_group = request.user.groups.first() if request.user.is_authenticated else None
+
+    food_list = []
+    for food in foods:
+        price = food.price  # قیمت پیش‌فرض
+        if user_group:
+            try:
+                price = GroupFoodPrice.objects.get(group=user_group, food=food).price
+            except GroupFoodPrice.DoesNotExist:
+                pass
+        food_list.append({
+            'food': food,
+            'price': price
+        })
+
+    return render(request, 'index.html', {
+        'foods': food_list,
+        'day': day
+    })
 
 # view cart options
 @login_required
@@ -139,23 +159,27 @@ def finalize_order(request):
 # add new food in admin panel
 @login_required
 def add_food(request):
-    if request.method == 'POST':
-        for i in range(1, 8):
-            food_name = request.POST.get(f'food{i}')
-            day_of_week = request.POST.get(f'day{i}')
+    if request.method == "POST":
+        food_name = request.POST.get("food1")
+        day = request.POST.get("day1")
+        date = request.POST.get("date1")
 
-            if food_name and day_of_week:
-                Food.objects.create(
-                    food_name=food_name,
-                    day_of_week=day_of_week
-                )
+        food = Food.objects.create(food_name=food_name, day_of_week=day)
 
-        return redirect('success_url')
-    else:
-        context = {
-            'food_range': range(1, 8) 
-        }
-        return render(request, 'admin_panel.html', context)
+        group_id = request.POST.get("group1")
+        group_price = request.POST.get("group_price1")
+
+        if group_id and group_price:
+            GroupFoodPrice.objects.create(
+                group_id=group_id,
+                food=food,
+                price=group_price
+            )
+        return redirect("success_page")
+
+    groups = Group.objects.all()
+    return render(request, "add_food.html", {"groups": groups})
+
     
 # delete all foods+reservations from database
 def delete_all_foods(request):
@@ -220,4 +244,36 @@ def add_user(request):
         'form': form,
         'group_form': group_form,
         'groups': groups
+    })
+def get_price_for_user(user, food):
+    group = user.groups.first()
+    if not group:
+        return food.base_price
+    try:
+        return GroupFoodPrice.objects.get(group=group, food=food).price
+    except GroupFoodPrice.DoesNotExist:
+        return food.base_price
+
+def manage_group_food_prices(request):
+    prices = GroupFoodPrice.objects.select_related('group', 'food').all()
+    form = GroupFoodPriceForm()
+
+    if request.method == 'POST':
+        # اضافه کردن یا ویرایش
+        if 'add_price' in request.POST:
+            form = GroupFoodPriceForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('manage_group_food_prices')
+
+        # حذف
+        elif 'delete_price' in request.POST:
+            price_id = request.POST.get('price_id')
+            obj = get_object_or_404(GroupFoodPrice, id=price_id)
+            obj.delete()
+            return redirect('manage_group_food_prices')
+
+    return render(request, 'manage_group_food_prices.html', {
+        'form': form,
+        'prices': prices
     })
