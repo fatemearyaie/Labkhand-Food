@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser, User
 from extensions.utils import jalaliConvertor
 from django.utils import timezone
 from extensions.utils import jalaliConvertor
+from django.contrib.auth.models import Group
 
 
 # Food model
@@ -86,3 +87,10 @@ class Card(models.Model):
     class Meta:
         verbose_name = 'کارت'
         verbose_name_plural = 'کارت ها'
+class GroupFoodPrice(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    class Meta:
+        unique_together = ('group', 'food')
