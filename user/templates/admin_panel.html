@@ -1,256 +1,165 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block main %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 1000px; /* Maximum width of the box */
-            margin: 50px auto; /* Centering the box with margin */
-            box-sizing: border-box;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px; /* Space between rows */
-        }
-        .form-row {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            box-sizing: border-box;
-            gap: 20px; /* Space between elements */
-        }
-        .form-row label {
-            flex: 1;
-            font-weight: bold;
-            margin: 0 5px 0 0; /* Margin to the right for space between label and input */
-        }
-        .form-row input, .form-row select {
-            flex: 2;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 0; /* Remove margin at the bottom */
-        }
-        .form-row select {
-            flex: 2; /* Adjusted to take more space */
-        }        .action-buttons {
-            display: flex; /* Align buttons in a row */
-            justify-content: space-between; /* Space buttons evenly */
-            margin-top: 20px; /* Margin on top for spacing */
-        }
-        .action-buttons {
-            display: flex; /* Align buttons in a row */
-            gap: 10px; /* Space between buttons */
-            margin-top: 20px; /* Margin on top for spacing */
-        }
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            flex: 1; /* Make buttons take equal space */
-        }
-        .add-food-button {
-            background-color: green; /* Blue for add food */
-        }
-        .delete-button {
-            background-color: red; /* Red for delete */
-        }
-        .report-button {
-            background-color:#007bff ; /* Green for report */
-        }
-        .user-button {
-    background-color: orange; /* رنگ متفاوت برای تمایز */
-}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    </style>
-<body>
-    {% block content %}
-    <div>
-        <div class="container">
-            <form method="post" action="{% url 'add_food' %}">
-                {% csrf_token %}
-                <div class="form-row">
-                    <label for="food1">غذا:</label>
-                    <input type="text" id="food1" name="food1" placeholder="نام غذا را وارد کنید" required>
-                    
-                    <label for="day1">روز:</label>
-                    <select id="day1" name="day1">
-                        <option value="Sat" selected>شنبه</option>
-                        <option value="Sun">یکشنبه</option>
-                        <option value="Mon">دوشنبه</option>
-                        <option value="Tue">سه‌شنبه</option>
-                        <option value="Wed">چهارشنبه</option>
-                        <option value="Thu">پنجشنبه</option>
-                        <option value="Fri">جمعه</option>
-                    </select>
-                     <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date1" name="date1" data-toggle="datetimepicker" data-target="#date1" placeholder="تاریخ را انتخاب کنید" required>
-</div>
-            
-                <div class="form-row">
-                    <label for="food2">غذا:</label>
-                    <input type="text" id="food2" name="food2" placeholder="نام غذا را وارد کنید" required>
-                    
-                    <label for="day2">روز:</label>
-                    <select id="day2" name="day2">
-                        <option value="Sat">شنبه</option>
-                        <option value="Sun"selected>یکشنبه</option>
-                        <option value="Mon">دوشنبه</option>
-                        <option value="Tue">سه‌شنبه</option>
-                        <option value="Wed">چهارشنبه</option>
-                        <option value="Thu">پنجشنبه</option>
-                        <option value="Fri">جمعه</option>
-                    </select>
-                    <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date2" name="date2" data-toggle="datetimepicker" data-target="#date2" placeholder="تاریخ را انتخاب کنید" required>
-                </div>
-            
-                <!-- تکرار برای هر غذا -->
-                <div class="form-row">
-                    <label for="food3">غذا:</label>
-                    <input type="text" id="food3" name="food3" placeholder="نام غذا را وارد کنید" required>
-                    
-                    <label for="day3">روز:</label>
-                    <select id="day3" name="day3">
-                        <option value="Sat">شنبه</option>
-                        <option value="Sun">یکشنبه</option>
-                        <option value="Mon"selected>دوشنبه</option>
-                        <option value="Tue">سه‌شنبه</option>
-                        <option value="Wed">چهارشنبه</option>
-                        <option value="Thu">پنجشنبه</option>
-                        <option value="Fri">جمعه</option>
-                    </select>
-                    <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date3" name="date3" data-toggle="datetimepicker" data-target="#date3" placeholder="تاریخ را انتخاب کنید" required>
-                </div>
-            
-                <div class="form-row">
-                    <label for="food4">غذا:</label>
-                    <input type="text" id="food4" name="food4" placeholder="نام غذا را وارد کنید" required>
-                    
-                    <label for="day4">روز:</label>
-                    <select id="day4" name="day4">
-                        <option value="Sat">شنبه</option>
-                        <option value="Sun">یکشنبه</option>
-                        <option value="Mon">دوشنبه</option>
-                        <option value="Tue"selected>سه‌شنبه</option>
-                        <option value="Wed">چهارشنبه</option>
-                        <option value="Thu">پنجشنبه</option>
-                        <option value="Fri">جمعه</option>
-                    </select>
-                    <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date4" name="date4" data-toggle="datetimepicker" data-target="#date4" placeholder="تاریخ را انتخاب کنید" required>
-                </div>
-            
-                <div class="form-row">
-                    <label for="food5">غذا:</label>
-                    <input type="text" id="food5" name="food5" placeholder="نام غذا را وارد کنید" required>
-                    
-                    <label for="day5">روز:</label>
-                    <select id="day5" name="day5">
-                        <option value="Sat">شنبه</option>
-                        <option value="Sun">یکشنبه</option>
-                        <option value="Mon">دوشنبه</option>
-                        <option value="Tue">سه‌شنبه</option>
-                        <option value="Wed"selected>چهارشنبه</option>
-                        <option value="Thu">پنجشنبه</option>
-                        <option value="Fri">جمعه</option>
-                    </select>
-                    <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date5" name="date5" data-toggle="datetimepicker" data-target="#date5" placeholder="تاریخ را انتخاب کنید" required>
-                </div>
-            
-                <div class="form-row">
-                    <label for="food6">غذا:</label>
-                    <input type="text" id="food6" name="food6" placeholder="نام غذا را وارد کنید" required>
-                    
-                    <label for="day6">روز:</label>
-                    <select id="day6" name="day6">
-                        <option value="Sat">شنبه</option>
-                        <option value="Sun">یکشنبه</option>
-                        <option value="Mon">دوشنبه</option>
-                        <option value="Tue">سه‌شنبه</option>
-                        <option value="Wed">چهارشنبه</option>
-                        <option value="Thu"selected>پنجشنبه</option>
-                        <option value="Fri">جمعه</option>
-                    </select>
-                    <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date6" name="date6" data-toggle="datetimepicker" data-target="#date6" placeholder="تاریخ را انتخاب کنید" required>
-                </div>
-            
-                <div class="form-row">
-                    <label for="food7">غذا:</label>
-                    <input type="text" id="food7" name="food7" placeholder="نام غذا را وارد کنید" required>
+<!-- jQuery (Select2 نیاز دارد) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                    <label for="day7">روز:</label>
-                    <select id="day7" name="day7">
-                        <option value="Sat">شنبه</option>
-                        <option value="Sun">یکشنبه</option>
-                        <option value="Mon">دوشنبه</option>
-                        <option value="Tue">سه‌شنبه</option>
-                        <option value="Wed">چهارشنبه</option>
-                        <option value="Thu">پنجشنبه</option>
-                        <option value="Fri"selected>جمعه</option>
-                    </select>
-                    <label for="date1">تاریخ دقیق:</label>
-    <input type="text" class="form-control datetimepicker-input" id="date7" name="date7" data-toggle="datetimepicker" data-target="#date7" placeholder="تاریخ را انتخاب کنید" required>
-                </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="submit" class="add-food-button">ثبت</button>
-            </form>
-            <form action="{% url 'admin_report' %}"   id="delete-form">
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 1000px;
+        margin: 50px auto;
+        box-sizing: border-box;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .form-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .form-row label {
+        flex: 1;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+    .form-row input, .form-row select {
+        flex: 2;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    /* دکمه‌ها در یک خط */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    button {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        flex: 1;
+        min-width: 150px;
+    }
+    .add-food-button { background-color: green; }
+    .delete-button { background-color: red; }
+    .report-button { background-color: #007bff; }
+    .user-button { background-color: orange; }
+
+    select, .bootstrap-datetimepicker-widget {
+        z-index: 2000 !important;
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+</style>
+
+<div class="container">
+    <!-- فرم اضافه کردن غذا -->
+    <form method="post" action="{% url 'add_food' %}">
+        {% csrf_token %}
+
+        {% for i in "1234567" %}
+        <div class="form-row">
+            <label for="food{{i}}">غذا:</label>
+            <input type="text" id="food{{i}}" name="food{{i}}" placeholder="نام غذا را وارد کنید" required>
+
+            <label for="day{{i}}">روز:</label>
+            <select id="day{{i}}" name="day{{i}}">
+                <option value="Sat" {% if i == "1" %}selected{% endif %}>شنبه</option>
+                <option value="Sun" {% if i == "2" %}selected{% endif %}>یکشنبه</option>
+                <option value="Mon" {% if i == "3" %}selected{% endif %}>دوشنبه</option>
+                <option value="Tue" {% if i == "4" %}selected{% endif %}>سه‌شنبه</option>
+                <option value="Wed" {% if i == "5" %}selected{% endif %}>چهارشنبه</option>
+                <option value="Thu" {% if i == "6" %}selected{% endif %}>پنجشنبه</option>
+                <option value="Fri" {% if i == "7" %}selected{% endif %}>جمعه</option>
+            </select>
+
+            <label for="date{{i}}">تاریخ دقیق:</label>
+            <input type="text" class="form-control datetimepicker-input" id="date{{i}}" name="date{{i}}" data-toggle="datetimepicker" data-target="#date{{i}}" placeholder="تاریخ را انتخاب کنید" required>
+        </div>
+        {% endfor %}
+
+        <!-- بخش قیمت گروهی -->
+        <div class="form-row">
+            <label for="group1">گروه:</label>
+            <select id="group1" name="group1">
+                {% for g in groups %}
+                    <option value="{{ g }}">{{ g }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="group_price1">قیمت برای گروه:</label>
+            <input type="number" id="group_price1" name="group_price1" placeholder="قیمت را وارد کنید">
+        </div>
+
+        <!-- دکمه ثبت فرم غذا -->
+        <div style="margin-top:20px;">
+            <button type="submit" class="add-food-button">ثبت</button>
+        </div>
+    </form>
+
+    <!-- دکمه‌های مدیریتی در یک div جداگانه -->
+    <div class="action-buttons">
+        <form action="{% url 'admin_report' %}">
             <button type="submit" class="report-button">تهیه گزارش</button>
-            </form>
-            <form method="post" action="{% url 'delete_all_foods' %}"   id="delete-form">
-                {% csrf_token %}
-            <button type="submit" class="delete-button" onclick="return confirmDeletion()">  حذف همه </button>
-            </form>
+        </form>
+        <form method="post" action="{% url 'delete_all_foods' %}">
+            {% csrf_token %}
+            <button type="submit" class="delete-button" onclick="return confirmDeletion()">حذف همه</button>
+        </form>
         <form action="{% url 'add_user' %}">
             <button type="submit" class="user-button">مدیریت کاربرها و گروه ها</button>
         </form>
+    </div>
+</div>
 
-                    
-                    
-                </div>
-                
-                <script>
-                    function confirmDeletion() {
-                        return confirm("آیا مطمئن هستید که می‌خواهید تمام غذاها را حذف کنید؟");
-                    }
-                </script>
-                <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-<script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
 <script>
-    $(function () {
-        $('#date1').datetimepicker({
-            format: 'YYYY-MM-DD'  // فرمت تاریخ: سال-ماه-روز
-        });
-        $('#date2').datetimepicker({ format: 'YYYY-MM-DD' });
-        $('#date3').datetimepicker({ format: 'YYYY-MM-DD' });
-        $('#date4').datetimepicker({ format: 'YYYY-MM-DD' });
-        $('#date5').datetimepicker({ format: 'YYYY-MM-DD' });
-        $('#date6').datetimepicker({ format: 'YYYY-MM-DD' });
-        $('#date7').datetimepicker({ format: 'YYYY-MM-DD' });
+function confirmDeletion() {
+    return confirm("آیا مطمئن هستید که می‌خواهید تمام غذاها را حذف کنید؟");
+}
+
+$(function () {
+    {% for i in "1234567" %}
+    $('#date{{i}}').datetimepicker({ format: 'YYYY-MM-DD' });
+    {% endfor %}
+});
+
+$(document).ready(function() {
+    $('.select2').select2({
+        width: 'resolve'  // اندازه باکس را با container هماهنگ می‌کند
     });
+});
+
 </script>
 
-        </div>
-    </div>
-  
-</body>
-</html>
-{% endblock %}  {% endblock %}
+{% endblock %}
