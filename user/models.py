@@ -87,8 +87,16 @@ class Card(models.Model):
     class Meta:
         verbose_name = 'کارت'
         verbose_name_plural = 'کارت ها'
+
+class FoodGroup(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 class GroupFoodPrice(models.Model):
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    group = models.ForeignKey(FoodGroup, on_delete=models.CASCADE)
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
