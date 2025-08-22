@@ -40,10 +40,7 @@ class CustomUserCreationForm(UserCreationForm):
         queryset=Group.objects.all(),
         required=False,
         widget=forms.SelectMultiple(
-            attrs={
-                'class': 'form-control select2',  # ← کلاس select2
-                'style': 'width:100%;'  # حتماً عرض 100٪
-            }
+            attrs={'class': 'form-control'}
         )
     )
 
